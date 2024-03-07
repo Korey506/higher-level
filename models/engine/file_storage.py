@@ -2,6 +2,7 @@
 
 import json
 from os import path
+from models.base_model import BaseModel
 """
     The json  module let's us work with json files
     while the os module let's us work with the path function
@@ -37,4 +38,4 @@ class FileStorage:
                 data = json.load(file)
                 for key, value in data.items():
                     class_name, obj_id = key.split('.')
-                    self.__objects[key] = globals()[class_name](**value)
+                    self.__obj[key] = globals()[class_name](**value)
