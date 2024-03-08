@@ -38,4 +38,6 @@ class FileStorage:
                 data = json.load(file)
                 for key, value in data.items():
                     class_name, obj_id = key.split('.')
-                    self.__obj[key] = globals()[class_name](**value)
+                    class_type = global().get(class_name)
+                    if class_type:
+                        self.__obj[key] = class_type(**value)
