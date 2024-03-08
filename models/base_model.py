@@ -1,12 +1,8 @@
 #!/usr/bin/python3
-
+""" import the universl unique ID module """
 import uuid
+""" import the datetime module """
 from datetime import datetime
-
-"""
-    uuid - for generating universal unique ID
-    datetime - to genrate current date and time an instance is created
-"""
 
 
 class BaseModel():

@@ -1,15 +1,20 @@
 #!/usr/bin/python3
-
+""" import json module """
 import json
+""" import os module """
 from os import path
+""" import all classes """
 from models.base_model import BaseModel
-"""
-    The json  module let's us work with json files
-    while the os module let's us work with the path function
-"""
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class FileStorage:
+    """ handles the storage of objects into a Json file """
     __file_path = "file.json"
     __obj = {}
 
