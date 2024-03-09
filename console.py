@@ -16,14 +16,22 @@ class HBNBCommand(cmd.Cmd):
     Attributes:
         prompt (str): The command prompt."""
     prompt = "(hbnb) "
-    lst_classes = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review']
+    lst_classes = [
+            'BaseModel',
+            'User',
+            'State',
+            'City',
+            'Amenity',
+            'Place',
+            'Review'
+            ]
 
     def do_EOF(self, line):
         """_EOF method to exit program"""
         return True
 
     def do_quit(self, line):
-        """Quit command to exit the program"""
+        """Quit command to exit the program\n"""
         return True
 
     def emptyline(self):
@@ -38,8 +46,15 @@ class HBNBCommand(cmd.Cmd):
         elif type_model not in self.lst_classes:
             print("** class doesn't exist **")
         else:
-            dct = {'BaseModel': BaseModel, 'User': User, 'State': State, 'City': City,
-                   'Amenity': Amenity, 'Place': Place, 'Review': Review}
+            dct = {
+                    'BaseModel': BaseModel,
+                    'User': User,
+                    'State': State,
+                    'City': City,
+                    'Amenity': Amenity,
+                    'Place': Place,
+                    'Review': Review
+                    }
             my_model = dct[type_model]()
             print(my_model.id)
             my_model.save()
@@ -93,14 +108,21 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """ Prints string represention of all instances of a given class """
+        if not arg:
+            print("** class name missing **")
+            return
+        args = arg.split(' ')
 
-        all_objs = storage.all()
-        list_instances = []
-        for key, value in all_objs.items():
-            ob_name = value.__class__.__name__
-            if ob_name == arg:
-                list_instances += [str(value)]
-        print(list_instances)
+        if args[0] not in self.lst_classes:
+            print("** class doesn't exist **")
+        else:
+            all_objs = storage.all()
+            list_instances = []
+            for key, value in all_objs.items():
+                ob_name = value.__class__.__name__
+                if ob_name == arg:
+                    list_instances += [str(value)]
+            print(list_instances)
 
     def do_update(self, arg):
         """ Updates an instance based on the class name and id """
@@ -147,4 +169,3 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
-
