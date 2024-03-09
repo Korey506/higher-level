@@ -166,24 +166,64 @@ class HBNBCommand(cmd.Cmd):
                 count += 1
         print(count)
 
+    def do_show(self, arg):
+        """ string rep of an instance based on id """
+        if not arg:
+            print("** class name missing **")
+            return
+
+        args = arg.split(' ')
+        class_name = args[0]
+
+        if class_name not in self.lst_classes:
+            print("** class doesn't exist **")
+            return
+
+        if len(args) == 1:
+            print("** instance id missing **")
+            return
+        instance_id = args[1]
+
+        if not (instance_id.startswith('"') and instance_id.endswith('"')):
+            print("** no instance found **")
+            return
+
+        instance_id = instance_id.strip('"')
+        all_objs = storage.all()
+
+        for key, value in all_objs.items():
+            if value.id == instance_id and value.__class__.__name__ == class_name:
+                print(value)
+                return
+        print("** no instance found **")
+
     def default(self, line):
         """
         Default method to handle unknown commands.
         """
         split_line = line.split('.')
-        if len(split_line) == 2 and split_line[1] == 'all()':
+        if len(split_line) == 2:
             class_name = split_line[0]
-            if class_name in self.lst_classes:
-                self.do_all(class_name)
-            else:
-                print("** class doesn't exist **")
+            action, identifier = split_line[1].split('(')
+            identifier = identifier.strip(')')
 
-        elif len(split_line) == 2 and split_line[1] == 'count()':
-            class_name = split_line[0]
-            if class_name in self.lst_classes:
-                self.do_count(class_name)
+            if action == 'all':
+                if class_name in self.lst_classes:
+                    self.do_all(class_name)
+                else:
+                    print("** class doesn't exist **")
+            elif action == 'count':
+                if class_name in self.lst_classes:
+                    self.do_count(class_name)
+                else:
+                    print("** class doesn't exist **")
+            elif action == 'show':
+                if class_name in self.lst_classes:
+                    self.do_show("{} {}".format(class_name, identifier))
+                else:
+                    print("** class doesn't exist **")
             else:
-                print("** class doesn't exist **")
+                print("*** Unknown syntax: {}".format(line))
         else:
             print("*** Unknown syntax: {}".format(line))
 

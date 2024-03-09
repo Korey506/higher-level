@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""Airbnb project -- This is the base_model"""
+
 """ import the universl unique ID module """
 import uuid
 """ import the datetime module """
@@ -11,7 +13,6 @@ class BaseModel():
 
     def __init__(self, *args, **kwargs):
         """ initializes the public instances """
-
 
         if kwargs:
             for key, value in kwargs.items():
