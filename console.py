@@ -3,6 +3,12 @@
 import cmd
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -10,7 +16,7 @@ class HBNBCommand(cmd.Cmd):
     Attributes:
         prompt (str): The command prompt."""
     prompt = "(hbnb) "
-    lst_classes = ['BaseModel']
+    lst_classes = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review']
 
     def do_EOF(self, line):
         """_EOF method to exit program"""
@@ -32,7 +38,8 @@ class HBNBCommand(cmd.Cmd):
         elif type_model not in self.lst_classes:
             print("** class doesn't exist **")
         else:
-            dct = {'BaseModel': BaseModel}
+            dct = {'BaseModel': BaseModel, 'User': User, 'State': State, 'City': City,
+                   'Amenity': Amenity, 'Place': Place, 'Review': Review}
             my_model = dct[type_model]()
             print(my_model.id)
             my_model.save()
@@ -87,22 +94,13 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, arg):
         """ Prints string represention of all instances of a given class """
 
-        if not arg:
-            print("** class name missing **")
-            return
-
-        args = arg.split(' ')
-
-        if args[0] not in self.lst_classes:
-            print("** class doesn't exist **")
-        else:
-            all_objs = storage.all()
-            list_instances = []
-            for key, value in all_objs.items():
-                ob_name = value.__class__.__name__
-                if ob_name == args[0]:
-                    list_instances += [str(value)]
-            print(list_instances)
+        all_objs = storage.all()
+        list_instances = []
+        for key, value in all_objs.items():
+            ob_name = value.__class__.__name__
+            if ob_name == arg:
+                list_instances += [str(value)]
+        print(list_instances)
 
     def do_update(self, arg):
         """ Updates an instance based on the class name and id """
@@ -131,6 +129,20 @@ class HBNBCommand(cmd.Cmd):
                     break
             if not found:
                 print("** no instance found **")
+
+    def default(self, line):
+        """
+        Default method to handle unknown commands.
+        """
+        split_line = line.split('.')
+        if len(split_line) == 2 and split_line[1] == 'all()':
+            class_name = split_line[0]
+            if class_name in self.lst_classes:
+                self.do_all(class_name)
+            else:
+                print("** class doesn't exist **")
+        else:
+            print("*** Unknown syntax: {}".format(line))
 
 
 if __name__ == "__main__":

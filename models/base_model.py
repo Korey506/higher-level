@@ -3,6 +3,7 @@
 import uuid
 """ import the datetime module """
 from datetime import datetime
+import models
 
 
 class BaseModel():
@@ -11,7 +12,7 @@ class BaseModel():
     def __init__(self, *args, **kwargs):
         """ initializes the public instances """
 
-        from models import storage
+
         if kwargs:
             for key, value in kwargs.items():
 
@@ -26,16 +27,15 @@ class BaseModel():
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """ string representation of the BaseModel class """
         return (f"[{type(self).__name__}] ({self.id}) {self.__dict__}")
 
     def save(self):
-        from models import storage
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         obj_dict = self.__dict__.copy()
