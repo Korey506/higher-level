@@ -11,7 +11,6 @@ class HBNBCommand(cmd.Cmd):
         prompt (str): The command prompt."""
     prompt = "(hbnb) "
     lst_classes = ['BaseModel']
-    lst_c = ['create', 'show', 'update', 'all', 'destroy']
 
     def do_EOF(self, line):
         """_EOF method to exit program"""
@@ -30,7 +29,7 @@ class HBNBCommand(cmd.Cmd):
 
         if not type_model:
             print("** class name missing **")
-        elif type_model not in HBNBCommand.lst_classes:
+        elif type_model not in self.lst_classes:
             print("** class doesn't exist **")
         else:
             dct = {'BaseModel': BaseModel}
@@ -47,7 +46,7 @@ class HBNBCommand(cmd.Cmd):
 
         args = arg.split(' ')
 
-        if args[0] not in HBNBCommand.lst_classes:
+        if args[0] not in self.lst_classes:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -70,7 +69,7 @@ class HBNBCommand(cmd.Cmd):
 
         args = arg.split(' ')
 
-        if args[0] not in HBNBCommand.lst_classes:
+        if args[0] not in self.lst_classes:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -80,8 +79,7 @@ class HBNBCommand(cmd.Cmd):
                 ob_name = value.__class__.__name__
                 ob_id = value.id
                 if ob_name == args[0] and ob_id == args[1].strip('"'):
-                    del value
-                    del storage._FileStorage__obj[key]
+                    del storage.all()[key]
                     storage.save()
                     return
             print("** no instance found **")
@@ -95,7 +93,7 @@ class HBNBCommand(cmd.Cmd):
 
         args = arg.split(' ')
 
-        if args[0] not in HBNBCommand.lst_classes:
+        if args[0] not in self.lst_classes:
             print("** class doesn't exist **")
         else:
             all_objs = storage.all()
@@ -103,9 +101,38 @@ class HBNBCommand(cmd.Cmd):
             for key, value in all_objs.items():
                 ob_name = value.__class__.__name__
                 if ob_name == args[0]:
-                    list_instances += [value.__str__()]
+                    list_instances += [str(value)]
             print(list_instances)
+
+    def do_update(self, arg):
+        """ Updates an instance based on the class name and id """
+
+        args = arg.split(' ')
+        if not arg:
+            print("** class name missing **")
+        elif args[0] not in self.lst_classes:
+            print("** class doesn't exist **")
+        elif len(args) == 1:
+            print("** instance id missing **")
+        elif len(args) == 2:
+            print("** attribute name missing **")
+        elif len(args) == 3:
+            print("** value missing **")
+        else:
+            all_objs = storage.all()
+            found = False
+            for key, value in all_objs.items():
+                ob_name = value.__class__.__name__
+                ob_id = value.id
+                if ob_name == args[0] and ob_id == args[1].strip('"'):
+                    setattr(value, args[2], args[3].strip('"'))
+                    value.save()
+                    found = True
+                    break
+            if not found:
+                print("** no instance found **")
 
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
+
