@@ -222,6 +222,11 @@ class HBNBCommand(cmd.Cmd):
                     self.do_show("{} {}".format(class_name, identifier))
                 else:
                     print("** class doesn't exist **")
+            elif action == 'destroy':
+                if class_name in self.lst_classes:
+                    self.do_destroy("{} {}".format(class_name, identifier))
+                else:
+                    print("** class doesn't exist **")
             else:
                 print("*** Unknown syntax: {}".format(line))
         else:
