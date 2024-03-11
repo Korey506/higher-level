@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 """ import json module """
 import json
-""" import os module """
 from os import path
-""" import all classes """
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
