@@ -2,6 +2,7 @@
 """ import json module """
 import json
 from os import path
+from models import storage
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
