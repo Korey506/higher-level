@@ -1,9 +1,6 @@
 #!/usr/bin/python3
 """Airbnb project -- This is the base_model"""
-
-""" import the universl unique ID module """
 import uuid
-""" import the datetime module """
 from datetime import datetime
 import models
 
