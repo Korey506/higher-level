@@ -36,14 +36,12 @@ class FileStorage:
 
     def reload(self):
         """ Deserialization """
-        """if path.exists(FileStorage.__file_path):"""
-        try:
+        dct = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
+               'City': City, 'Amenity': Amenity, 'State': State,
+               'Review': Review}
+
+        if path.exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, 'r') as file_:
                 data = json.load(file_)
                 for key, value in data.items():
-                    class_name, obj_id = key.split('.')
-                    class_type = globals().get(class_name)
-                    if class_type:
-                        FileStorage.__objects[key] = class_type(**value)
-        except FileNotFoundError:
-            pass
+                    self.new(dct[value['__class__']](**value))
