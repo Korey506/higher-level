@@ -192,7 +192,8 @@ class HBNBCommand(cmd.Cmd):
         all_objs = storage.all()
 
         for key, value in all_objs.items():
-            if value.id == instance_id and value.__class__.__name__ == class_name:
+            if value.id == instance_id and
+            value.__class__.__name__ == class_name:
                 print(value)
                 return
         print("** no instance found **")
