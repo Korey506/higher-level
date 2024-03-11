@@ -36,7 +36,8 @@ class FileStorage:
 
     def reload(self):
         """ Deserialization """
-        if path.exists(FileStorage.__file_path):
+        """if path.exists(FileStorage.__file_path):"""
+        try:
             with open(FileStorage.__file_path, 'r') as file_:
                 data = json.load(file_)
                 for key, value in data.items():
@@ -44,3 +45,5 @@ class FileStorage:
                     class_type = globals().get(class_name)
                     if class_type:
                         FileStorage.__objects[key] = class_type(**value)
+        except FileNotFoundError:
+            pass
