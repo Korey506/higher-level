@@ -58,7 +58,7 @@ class HBNBCommand(cmd.Cmd):
                     }
             my_model = dct[type_model]()
             print(my_model.id)
-            my_model.save()
+            storage.save()
 
     def do_show(self, arg):
         """ Shows string representation of an instance passed """
@@ -122,7 +122,7 @@ class HBNBCommand(cmd.Cmd):
             for key, value in all_objs.items():
                 ob_name = value.__class__.__name__
                 if ob_name == arg:
-                    list_instances += [str(value)]
+                    list_instances += [value.__str__()]
             print(list_instances)
 
     def do_update(self, arg):
