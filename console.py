@@ -56,7 +56,7 @@ class HBNBCommand(cmd.Cmd):
                     'Review': Review
                     }
             my_model = dct[type_model]()
-            print("{}".format(my_model.id))
+            print(my_model.id)
             my_model.save()
 
     def do_show(self, arg):
