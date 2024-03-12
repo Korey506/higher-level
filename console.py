@@ -43,7 +43,7 @@ class HBNBCommand(cmd.Cmd):
 
         if not type_model:
             print("** class name missing **")
-        elif type_model not in self.lst_classes:
+        elif type_model not in HBNBCommand.lst_classes:
             print("** class doesn't exist **")
         else:
             dct = {
@@ -68,7 +68,7 @@ class HBNBCommand(cmd.Cmd):
 
         args = arg.split(' ')
 
-        if args[0] not in self.lst_classes:
+        if args[0] not in HBNBCommand.lst_classes:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -91,7 +91,7 @@ class HBNBCommand(cmd.Cmd):
 
         args = arg.split(' ')
 
-        if args[0] not in self.lst_classes:
+        if args[0] not in HBNBCommand.lst_classes:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -113,7 +113,7 @@ class HBNBCommand(cmd.Cmd):
             return
         args = arg.split(' ')
 
-        if args[0] not in self.lst_classes:
+        if args[0] not in HBNBCommand.lst_classes:
             print("** class doesn't exist **")
         else:
             all_objs = storage.all()
@@ -130,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split(' ')
         if not arg:
             print("** class name missing **")
-        elif args[0] not in self.lst_classes:
+        elif args[0] not in HBNBCommand.lst_classes:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -155,7 +155,7 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, arg):
         """ prints the number of instances of a given class """
         class_name = arg.split('.')[0]
-        if class_name not in self.lst_classes:
+        if class_name not in HBNBCommand.lst_classes:
             print("** class doesn't exist **")
             return
         count = 0
@@ -175,7 +175,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split(' ')
         class_name = args[0]
 
-        if class_name not in self.lst_classes:
+        if class_name not in HBNBCommand.lst_classes:
             print("** class doesn't exist **")
             return
 
@@ -192,8 +192,7 @@ class HBNBCommand(cmd.Cmd):
         all_objs = storage.all()
 
         for key, value in all_objs.items():
-            if value.id == instance_id and
-            value.__class__.__name__ == class_name:
+            if value.id == instance_id and value.__class__.__name__ == class_name:
                 print(value)
                 return
         print("** no instance found **")
@@ -209,22 +208,22 @@ class HBNBCommand(cmd.Cmd):
             identifier = identifier.strip(')')
 
             if action == 'all':
-                if class_name in self.lst_classes:
+                if class_name in HBNBCommand.lst_classes:
                     self.do_all(class_name)
                 else:
                     print("** class doesn't exist **")
             elif action == 'count':
-                if class_name in self.lst_classes:
+                if class_name in HBNBCommand.lst_classes:
                     self.do_count(class_name)
                 else:
                     print("** class doesn't exist **")
             elif action == 'show':
-                if class_name in self.lst_classes:
+                if class_name in HBNBCommand.lst_classes:
                     self.do_show("{} {}".format(class_name, identifier))
                 else:
                     print("** class doesn't exist **")
             elif action == 'destroy':
-                if class_name in self.lst_classes:
+                if class_name in HBNBCommand.lst_classes:
                     self.do_destroy("{} {}".format(class_name, identifier))
                 else:
                     print("** class doesn't exist **")
