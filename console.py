@@ -56,7 +56,7 @@ class HBNBCommand(cmd.Cmd):
                     'Review': Review
                     }
             my_model = dct[type_model]()
-            print(my_model.id)
+            print("{}".format(my_model.id))
             my_model.save()
 
     def do_show(self, arg):
@@ -120,7 +120,7 @@ class HBNBCommand(cmd.Cmd):
             list_instances = []
             for key, value in all_objs.items():
                 ob_name = value.__class__.__name__
-                if ob_name == arg:
+                if ob_name == arg[0]:
                     list_instances += [str(value)]
             print(list_instances)
 
