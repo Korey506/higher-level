@@ -67,19 +67,6 @@ ul {
   padding-left: 30px;
   flex-direction: column;
 }
-.popover {
-  gap: 20px;
-}
-
-.locations:hover .popover {
-  display: flex;
-  z-index: 1;
-}
-
-.amenitie:hover .popover {
-  display: flex;
-  z-index: 1;
-}
 
 /*
    ==========================
@@ -103,4 +90,17 @@ ul {
 		display: grid;
 		height: 210px;
 	}
+}
+.popover {
+  gap: 20px;
+}
+
+.locations:hover .popover {
+  display: flex;
+  z-index: 1;
+}
+
+.amenitie:hover .popover {
+  display: flex;
+  z-index: 1;
 }

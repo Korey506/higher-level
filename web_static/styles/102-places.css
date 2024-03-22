@@ -6,6 +6,17 @@
   text-align: left;
   font-size: 30px;
 }
+
+/*
+   ======================================
+	align header 1 as screen gets smaller
+   ======================================
+*/
+@media only screen and (max-width: 1000px) {
+	.places h1{
+		width: 95%;
+	}
+}
 .articles {
   display: flex;
   flex-direction: row;
@@ -80,15 +91,4 @@ article h2 {
 .user, .description {
     margin-top: 20px;
     text-align: left;
-}
-
-/*
-   ======================================
-	align header 1 as screen gets smaller
-   ======================================
-*/
-@media only screen and (max-width: 1000px) {
-	.places h1{
-		width: 95%;
-	}
 }
